@@ -1,0 +1,28 @@
+permanent-access:
+  - description: Team read-only access to non-prod environments
+    users:
+      - user1@example.com
+      - user2@example.com
+    environments:
+      - nonprod
+      - acceptance
+    grants:
+      - dev.read-only
+
+  - description: Platform team admin access to all environments
+    users:
+      - platform-admin@example.com
+    environments:
+      - nonprod
+      - acceptance
+      - prod
+    grants:
+      - platform.admin
+
+  - description: Service account access for CI/CD
+    roles:
+      - github-actions-deployer
+    environments:
+      - nonprod
+    grants:
+      - dev.break-glass

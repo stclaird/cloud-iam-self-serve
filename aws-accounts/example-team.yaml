@@ -1,0 +1,5 @@
+aws-accounts:
+  # Map environment names to AWS Account IDs
+  nonprod: "123456789012"
+  acceptance: "234567890123"
+  prod: "345678901234"

@@ -1,0 +1,35 @@
+aws-policies:
+  developers.read-only:
+    description: "Read Only access for developers"
+    # Reference existing AWS managed policies
+    managed_policies:
+      - "arn:aws:iam::aws:policy/ReadOnlyAccess"
+      - "arn:aws:iam::aws:policy/CloudWatchReadOnlyAccess"
+    # Add custom permissions (optional)
+    custom_statements:
+      - effect: "Allow"
+        actions:
+          - "s3:ListBucket"
+          - "s3:GetObject"
+          - "ec2:DescribeInstances"
+          - "rds:DescribeDBInstances"
+        resources: ["*"]
+
+  developers.write-access:
+    description: "Break-glass access for developers, with write permission"
+    managed_policies:
+      - "arn:aws:iam::aws:policy/PowerUserAccess"
+    custom_statements:
+      - effect: "Allow"
+        actions:
+          - "rds:ModifyDBInstance"
+          - "s3:PutObject"
+          - "s3:DeleteObject"
+          - "secretsmanager:CreateSecret"
+          - "secretsmanager:UpdateSecret"
+        resources: ["*"]
+
+  system.admin:
+    description: "Platform team administrative access"
+    managed_policies:
+      - "arn:aws:iam::aws:policy/AdministratorAccess"

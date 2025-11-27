@@ -1,0 +1,12 @@
+temporary-access:
+  - description: Debug production database issue
+    expiration_date: 2025-11-30
+    user: developer@example.com
+    environment: prod
+    grant: dev.break-glass
+
+  - description: Add secret to production secret manager
+    expiration_date: 2025-11-28
+    user: devops@example.com
+    environment: prod
+    grant: dev.break-glass
