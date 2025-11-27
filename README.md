@@ -1,4 +1,4 @@
-# AWS Self Serve IAM
+# AWS IAM Self Serve
 Managing AWS environment Self Service Access IAM permissions
 
 ## Overview
