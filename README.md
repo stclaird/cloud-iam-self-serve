@@ -1,5 +1,4 @@
-# AWS IAM as Code
-
+# AWS Self Serve IAM
 Managing AWS environment Self Service Access IAM permissions
 
 ## Overview
@@ -29,7 +28,7 @@ export AWS_DEFAULT_REGION=us-east-1
 
 ### 2. IAM Deployer Role
 
-Create an IAM role named `IAMAsCodeDeployer` in each AWS account you want to manage:
+Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to manage:
 
 ```json
 {
