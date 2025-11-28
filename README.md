@@ -34,7 +34,12 @@ _NOTE_
 
 Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to manage with this tool:
 
+You can do this with Terraform, CLI or Cloud Console.  The following examples shows this done via the AWS CLI.
+
+1. Create a deployer-deployer.json file
+
 ```json
+cat > deployer-policy.json << 'EOF'
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -59,11 +64,14 @@ Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to 
     }
   ]
 }
+EOF
 ```
 
-**Trust Policy** for the role:
+2. Create the Trust Policy for the role:
+_Replace <your-central-account-id> with your actual AWS account ID._
 
 ```json
+cat > trust-policy.json << 'EOF'
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -76,6 +84,25 @@ Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to 
     }
   ]
 }
+EOF
+```
+
+3. Create the Role with Trust Policy.
+
+```bash
+aws iam create-role \
+  --role-name AWSSelfServeDeployer \
+  --assume-role-policy-document file://trust-policy.json \
+  --description "IAM Self-Serve Deployer Role for managing IAM policies and access"
+```
+
+Attach the Policy to the Role
+
+```bash
+aws iam put-role-policy \
+  --role-name AWSSelfServeDeployer \
+  --policy-name AWSSelfServeDeployerPolicy \
+  --policy-document file://deployer-policy.json
 ```
 
 ### 3. Python Dependencies
