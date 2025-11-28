@@ -1,5 +1,5 @@
-# AWS IAM Self Serve
-Managing AWS environment Self Service Access IAM permissions
+# IAM Self Serve
+Managing Cloud Environment environment access IAM permissions for developers.
 
 ## Overview
 
@@ -10,25 +10,26 @@ This system allows teams to manage AWS IAM access through YAML configuration fil
 - **Temporary Access** - Time-limited access with automatic expiration validation
 - **Multi-Account Support** - Manage access across multiple AWS accounts
 
-## Prerequisites
+## What is the purpose of this tool?
+Often users need access to a cloud account which is generally managed via IAM roles and polices.  This is often handled via Infrastructure as code by creating users and assigning them to groups or roles often done via Iac tooling such as Terraform. This works well for long term users who need access.  However, for users who need short term access either becasue they are not permenant members of staff or the organisations security policy  doesn't permit users permenant access.
+This tool builds on that idea, it allows users to create a permissions requests along with a time limit when the 
 
-### 1. AWS Credentials
+## How might you implement this IAM Self Serve tool?
 
-Set up AWS credentials with appropriate permissions:
+A good example would to have your own copy (clone or forked) of this repo in your git provider such as github or gitlab. With this in place users can raise permissions requests via pull requests and other users, or perhaps managers can approve this PR.  Then the tool will run on merge.  
 
-```bash
-# Configure AWS CLI
-aws configure
+## Prerequisites for running the scripts.  
 
-# Or use environment variables
-export AWS_ACCESS_KEY_ID=your_access_key
-export AWS_SECRET_ACCESS_KEY=your_secret_key
-export AWS_DEFAULT_REGION=us-east-1
-```
+### 1. AWS Credentials.  
+#### For running on your workstation
+The script will need to run as a user or service account that has AWS IAM permissions enough to manage CRUD on IAM users.  These permssions are referred to as an IAM deployer role in this document.
+Set up or identify an existing user and 
+
+_NOTE_ 
 
 ### 2. IAM Deployer Role
 
-Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to manage:
+Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to manage with this tool:
 
 ```json
 {
@@ -114,13 +115,13 @@ aws-accounts:
   prod: "345678901234"
 ```
 
-### 2. AWS Policies (`aws-policies/team.yaml`)
+### 2. AWS Policies (`aws-policies/your-team.yaml`)
 
-Define custom IAM policies:
+Define custom IAM policies. These are the IAM permissions policies you are going to make available to your users to request when they request a permission.
 
 ```yaml
 aws-policies:
-  dev.read-only:
+  developers.read-only:
     description: "Read Only access for developers"
     managed_policies:
       - "arn:aws:iam::aws:policy/ReadOnlyAccess"
