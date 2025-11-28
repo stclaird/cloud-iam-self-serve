@@ -11,18 +11,21 @@ This system allows teams to manage AWS IAM access through YAML configuration fil
 - **Multi-Account Support** - Manage access across multiple AWS accounts
 
 ## What is the purpose of this tool?
-Often users need access to a cloud account which is generally managed via IAM roles and polices.  This is often handled via Infrastructure as code by creating users and assigning them to groups or roles often done via Iac tooling such as Terraform. This works well for long term users who need access.  However, for users who need short term access either becasue they are not permenant members of staff or the organisations security policy  doesn't permit users permenant access.
-This tool builds on that idea, it allows users to create a permissions requests along with a time limit when the 
+Often users need access to a cloud account which is generally managed via IAM roles and polices.  This is often handled via Infrastructure as code by creating users and assigning them to groups or roles often done via Iac tooling such as Terraform. This works well for long term users who need permanent access and have permissions relevant to their job role.  However, sometimes a user needs a different level of permission temporarily, when this happens the cloud administrators have to modify the users perms and ensure that it is taken away when it is no longer required.
+
+This tool allows the users to submit a temporary access permission request which will be automatically expired by IAM once the request's time limit has been reached.
+
+For example, if user Bert needs write access to an S3 bucket for 2 days, Bert would submit a request for access (usually via PR) with the date when you wish the access to expire.  This request would be reviewed by Bert's manager or peers and if the request is valid it would be merged and Bert's access permission would be granted in IAM.  2 Days later the permission would expire and Bert would be denied access.
 
 ## How might you implement this IAM Self Serve tool?
 
-A good example would to have your own copy (clone or forked) of this repo in your git provider such as github or gitlab. With this in place users can raise permissions requests via pull requests and other users, or perhaps managers can approve this PR.  Then the tool will run on merge.  
+A good example would to have your own copy (clone or forked) of this repo in your git provider such as github or gitlab. With this in place users can raise permissions requests via pull requests and other users, or perhaps managers can approve this PR.  Then the tool will run on merge and create the permission requests. 
 
 ## Prerequisites for running the scripts.  
 
 ### 1. AWS Credentials.  
 #### For running on your workstation
-The script will need to run as a user or service account that has AWS IAM permissions enough to manage CRUD on IAM users.  These permssions are referred to as an IAM deployer role in this document.
+The tool will need to run as a user or service account that has AWS IAM permissions enough to manage CRUD on IAM users.  These permssions are referred to as an IAM deployer role in this document.
 Set up or identify an existing user and 
 
 _NOTE_ 
