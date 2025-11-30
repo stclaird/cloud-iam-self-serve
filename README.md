@@ -15,7 +15,7 @@ Often users need access to a cloud account which is generally managed via IAM ro
 
 This tool allows the users to submit a temporary access permission request which will be automatically expired by IAM once the request's time limit has been reached.
 
-For example, if user Bert needs write access to an S3 bucket for 2 days, Bert would submit a request for access (usually via PR) with the date when you wish the access to expire.  This request would be reviewed by Bert's manager or peers and if the request is valid it would be merged and Bert's access permission would be granted in IAM.  2 days later the permission would expire and Bert would be denied access.
+For example, if user Bert needs write access to an S3 bucket for 2 days, Bert would submit a request for access (usually via PR) with the date when Bert wishes the access to expire.  This request would be reviewed by Bert's manager or peers and if the request is valid it would be merged and Bert's access permission would be granted in IAM.  2 days later the permission would expire and Bert would be denied access.
 
 ## How might you implement this IAM Self Serve tool?
 
@@ -28,11 +28,10 @@ A good example would to have your own copy (clone or forked) of this repo in you
 The tool will need to run as a user or service account that has AWS IAM permissions enough to manage CRUD on IAM users.  These permssions are referred to as an IAM deployer role in this document.
 Set up or identify an existing user and
 
-_NOTE_
 
 ### 2. IAM Deployer Role
 
-Create an IAM role named `AWSSelfServeDeployer` in each AWS account you want to manage with this tool:
+Create an IAM role named `AWSSelfServeDeployer` (for example) in each AWS account you want to manage with this tool:
 
 You can do this with Terraform, CLI or Cloud Console.  The following examples shows this done via the AWS CLI.
 
